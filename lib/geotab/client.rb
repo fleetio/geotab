@@ -24,13 +24,21 @@ module Geotab
       devices
     end
 
-    def odometer_readings(device_id, from_date = Date.today - 1, to_date = Date.today)
-      response = Faraday.get("https://#{parent.path}/apiv1/Get",
+    def last_odometer_reading(device_id, from_date = Date.today - 1, to_date = Date.today)
+      response = Faraday.get("https://#{@path}/apiv1/Get",
                              {typeName: "StatusData",
-                              credentials: parent.credentials,
+                              credentials: credentials,
                               search: "{'deviceSearch':{'id':'#{device_id}'},'diagnosticSearch':{'id':'DiagnosticOdometerAdjustmentId'},'fromDate':'#{(from_date).to_s}'}"})
       attributes = JSON.parse(response.body)
       readings = attributes.to_ostruct_recursive.result
+
+      reading = readings.last(2).first # the last one is usually junk
+
+      mi = (reading.data / 1609.344).to_i
+      km = (reading.data / 1000).to_i
+
+      puts "\n********#{reading.inspect}"
+      {mi: mi, km: km, date: reading.dateTime}
     end
 
     def credentials
