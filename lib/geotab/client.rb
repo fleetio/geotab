@@ -24,6 +24,15 @@ module Geotab
       devices
     end
 
+    def odometer_readings(device_id, from_date = Date.today - 1, to_date = Date.today)
+      response = Faraday.get("https://#{parent.path}/apiv1/Get",
+                             {typeName: "StatusData",
+                              credentials: parent.credentials,
+                              search: "{'deviceSearch':{'id':'#{device_id}'},'diagnosticSearch':{'id':'DiagnosticOdometerAdjustmentId'},'fromDate':'#{(from_date).to_s}'}"})
+      attributes = JSON.parse(response.body)
+      readings = attributes.to_ostruct_recursive.result
+    end
+
     def credentials
       "{'database':'#{@credentials['database']}','userName':'#{@credentials['userName']}','sessionId':'#{@credentials['sessionId']}'}"
     end
