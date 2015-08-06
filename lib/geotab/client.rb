@@ -8,7 +8,7 @@ module Geotab
       attributes = JSON.parse(response.body)
 
       @path = attributes["result"]["path"]
-      @credentials = attributes["result"]["credentials"]
+      @credentials = attributes["result"]["credentials"].merge("path" => @path)
     end
 
     def devices
