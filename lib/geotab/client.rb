@@ -37,8 +37,17 @@ module Geotab
       mi = (reading.data / 1609.344).to_i
       km = (reading.data / 1000).to_i
 
-      puts "\n********#{reading.inspect}"
       {mi: mi, km: km, date: reading.dateTime}
+    end
+
+    def location(device_id)
+      response = Faraday.get("https://#{@path}/apiv1/Get",
+                             {typeName: "DeviceStatusInfo",
+                              credentials: credentials,
+                              search: "{'deviceSearch':{'id':'#{device_id}'}}"})
+      attributes = JSON.parse(response.body)
+      result = attributes.to_ostruct_recursive.result
+      result.first
     end
 
     def credentials
