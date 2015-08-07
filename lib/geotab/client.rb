@@ -55,6 +55,7 @@ module Geotab
       result = attributes.to_ostruct_recursive.result.first
 
       {
+        date: result.dateTime,
         bearing: result.bearing,
         current_state_duration: result.currentStateDuration,
         is_device_communicating: result.isDeviceCommunicating,
