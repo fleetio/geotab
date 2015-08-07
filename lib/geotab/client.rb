@@ -13,6 +13,8 @@ module Geotab
 
     def set_credentials(credentials)
       @credentials = credentials
+      @path = credentials["path"]
+      @credentials
     end
 
     def devices
