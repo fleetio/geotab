@@ -52,8 +52,7 @@ module Geotab
                               credentials: credentials,
                               search: "{'deviceSearch':{'id':'#{device_id}'}}"})
       attributes = JSON.parse(response.body)
-      result = attributes.to_ostruct_recursive.result
-      result.first
+      result = attributes.to_ostruct_recursive.result.first
 
       {
         bearing: result.bearing,
