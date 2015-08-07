@@ -54,6 +54,16 @@ module Geotab
       attributes = JSON.parse(response.body)
       result = attributes.to_ostruct_recursive.result
       result.first
+
+      {
+        bearing: result.bearing,
+        current_state_duration: result.currentStateDuration,
+        is_device_communicating: result.isDeviceCommunicating,
+        is_driving: result.isDriving,
+        latitude: result.latitude,
+        longitude: result.longitude,
+        speed: result.speed
+      }
     end
 
     def credentials
