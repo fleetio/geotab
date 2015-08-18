@@ -9,7 +9,6 @@ module Geotab
 
         def all(parent, params={})
           search = params.to_s.gsub(" ", "").gsub("=>", ":").gsub("\"", "'")
-
           response = Faraday.get("https://#{parent.path}/apiv1/Get",
                                  {typeName: geotab_reference_name,
                                   credentials: parent.credentials,
