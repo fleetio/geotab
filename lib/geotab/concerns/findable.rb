@@ -31,10 +31,13 @@ module Geotab
         # actual call to the API.
         def all
           response = Faraday.get("https://#{connection.path}/apiv1/Get",
-                                 {typeName: geotab_reference_name,
-                                  credentials: connection.credentials,
-                                  search: formatted_conditions})
-          # Conditions are now stale
+                                 {
+                                    typeName: geotab_reference_name,
+                                    credentials: connection.credentials,
+                                    search: formatted_conditions
+                                  })
+
+          # Conditions are now stale, so clear them
           clear_conditions
           
           attributes = JSON.parse(response.body).to_ostruct_recursive.result
