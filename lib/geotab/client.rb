@@ -17,55 +17,6 @@ module Geotab
       @credentials
     end
 
-    def devices
-      response = Faraday.get("https://#{@path}/apiv1/Get",
-                             {typeName: "Device", credentials: credentials})
-      attributes = JSON.parse(response.body)
-
-      devices = []
-      attributes.to_ostruct_recursive.result.each do |device|
-        devices.push(Device.new(device, self))
-      end
-
-      devices
-    end
-
-    def last_odometer_reading(device_id, from_date = Date.today - 1, to_date = Date.today)
-      response = Faraday.get("https://#{@path}/apiv1/Get",
-                             {typeName: "StatusData",
-                              credentials: credentials,
-                              search: "{'deviceSearch':{'id':'#{device_id}'},'diagnosticSearch':{'id':'DiagnosticOdometerAdjustmentId'},'fromDate':'#{(from_date).to_s}'}"})
-      attributes = JSON.parse(response.body)
-      readings = attributes.to_ostruct_recursive.result
-
-      reading = readings.last(2).first # the last one is usually junk
-
-      mi = (reading.data / 1609.344).to_i
-      km = (reading.data / 1000).to_i
-
-      {mi: mi, km: km, date: reading.dateTime}
-    end
-
-    def location(device_id)
-      response = Faraday.get("https://#{@path}/apiv1/Get",
-                             {typeName: "DeviceStatusInfo",
-                              credentials: credentials,
-                              search: "{'deviceSearch':{'id':'#{device_id}'}}"})
-      attributes = JSON.parse(response.body)
-      result = attributes.to_ostruct_recursive.result.first
-
-      {
-        date: result.dateTime,
-        bearing: result.bearing,
-        current_state_duration: result.currentStateDuration,
-        is_device_communicating: result.isDeviceCommunicating,
-        is_driving: result.isDriving,
-        latitude: result.latitude,
-        longitude: result.longitude,
-        speed: result.speed
-      }
-    end
-
     def credentials
       "{'database':'#{@credentials['database']}','userName':'#{@credentials['userName']}','sessionId':'#{@credentials['sessionId']}'}"
     end

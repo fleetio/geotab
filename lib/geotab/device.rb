@@ -1,27 +1,40 @@
 module Geotab
   class Device
-    attr :data, true
-    attr :parent, true
+    include Geotab::Concerns::Findable
+    include Geotab::Concerns::Initializable
 
-    def initialize(data, parent)
-      self.data = data
-      self.parent = parent
+    def status_data
+      Geotab::StatusDatum.where(parent, {'deviceSearch' => {'id' => data.id}})
     end
 
-    def odometer_readings(from_date = Date.today - 1, to_date = Date.today)
-      response = Faraday.get("https://#{parent.path}/apiv1/Get",
-                             {typeName: "StatusData",
-                              credentials: parent.credentials,
-                              search: "{'deviceSearch':{'id':'#{data.id}'},'diagnosticSearch':{'id':'DiagnosticOdometerAdjustmentId'},'fromDate':'#{(from_date).to_s}'}"})
-      attributes = JSON.parse(response.body)
-      readings = attributes.to_ostruct_recursive.result
+    def odometer_readings
+      Geotab::StatusDatum.where(parent, {
+        'deviceSearch' => {'id' => data.id},
+        'diagnosticSearch' => {'id' => 'DiagnosticOdometerAdjustmentId'}
+      })
     end
 
-    def latest_odometer_reading
-      mi = (odometer_readings.last.data / 1609.344).to_i
-      km = (odometer_readings.last.data / 1000).to_i
+    def device_status_infos
+      Geotab::DeviceStatusInfo.where(parent, {'deviceSearch' => {'id' => data.id}})
+    end
 
-      {mi: mi, km: km}
+    def fault_data
+      Geotab::FaultDatum.where(parent, {'deviceSearch' => {'id' => data.id}})
+    end
+
+    def location
+      result = device_status_infos.first
+
+      {
+        date: result.data.dateTime,
+        bearing: result.data.bearing,
+        current_state_duration: result.data.currentStateDuration,
+        is_device_communicating: result.data.isDeviceCommunicating,
+        is_driving: result.data.isDriving,
+        latitude: result.data.latitude,
+        longitude: result.data.longitude,
+        speed: result.data.speed
+      }
     end
   end
 end
