@@ -4,22 +4,26 @@ module Geotab
     include Geotab::Concerns::Initializable
 
     def status_data
-      Geotab::StatusDatum.where(parent, {'deviceSearch' => {'id' => data.id}})
+      Geotab::StatusDatum.with_connection(parent).where({'deviceSearch' => {'id' => data.id}}).all
     end
 
     def odometer_readings
-      Geotab::StatusDatum.where(parent, {
+      Geotab::StatusDatum.with_connection(parent).where({
         'deviceSearch' => {'id' => data.id},
         'diagnosticSearch' => {'id' => 'DiagnosticOdometerAdjustmentId'}
-      })
+      }).all
     end
 
     def device_status_infos
-      Geotab::DeviceStatusInfo.where(parent, {'deviceSearch' => {'id' => data.id}})
+      Geotab::DeviceStatusInfo.with_connection(parent).where({'deviceSearch' => {'id' => data.id}}).all
     end
 
     def fault_data
-      Geotab::FaultDatum.where(parent, {'deviceSearch' => {'id' => data.id}})
+      Geotab::FaultDatum.with_connection(parent).where({'deviceSearch' => {'id' => data.id}}).all
+    end
+
+    def diagnostics
+      Geotab::Diagnostic.with_connection(parent).where({'deviceSearch' => {'id' => data.id}}).all
     end
 
     def location
