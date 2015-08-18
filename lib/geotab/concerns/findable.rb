@@ -28,6 +28,10 @@ module Geotab
           results
         end
 
+        def find(parent, id)
+          where(parent, {'id': "'#{id}'"})
+        end
+
         alias_method :where, :all
       end
 
