@@ -1,22 +1,26 @@
+# Keeps track of a query's connection, since this gem is intended to be used
+# with multiple accounts/connections (unlike activerecord which usually only
+# has a single connection to worry about.
 module Geotab
   module Concerns
     module Connectable
       module ClassMethods
-
-        def conditions
-          @conditions ||= {}
+        def connection
+          @connection
         end
 
-        def clear_conditions
-          @conditions = {}
+        # Meant to be added to a query to specify the connection to use to query
+        # the API. Ex: Geotab::Device.with_connection(con).first
+        def with_connection(connection)
+          @connection = connection
+
+          self
         end
 
+        def self.included(base)
+          base.extend(ClassMethods)
+        end
       end
-
-      def self.included(base)
-        base.extend(ClassMethods)
-      end
-
     end
   end
 end
