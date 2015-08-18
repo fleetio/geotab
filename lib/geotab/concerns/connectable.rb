@@ -4,22 +4,16 @@
 module Geotab
   module Concerns
     module Connectable
-      module ClassMethods
-        def connection
-          @connection
-        end
+      def connection
+        @connection
+      end
 
-        # Meant to be added to a query to specify the connection to use to query
-        # the API. Ex: Geotab::Device.with_connection(con).first
-        def with_connection(connection)
-          @connection = connection
+      # Meant to be added to a query to specify the connection to use to query
+      # the API. Ex: Geotab::Device.with_connection(con).first
+      def with_connection(connection)
+        @connection = connection
 
-          self
-        end
-
-        def self.included(base)
-          base.extend(ClassMethods)
-        end
+        self
       end
     end
   end
