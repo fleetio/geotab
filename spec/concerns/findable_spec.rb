@@ -5,20 +5,6 @@ describe Geotab::Concerns::Findable do
   let(:conditions_1) { {"c1" => "v1"} }
   let(:conditions_2) { {"c2" => "v3"} }
 
-  # before :each do
-  #   allow(dummy).to receive(:connection) { 
-  #     OpenStruct.new({
-  #       path: "my100.geotab.com"
-  #     })
-  #   }
-
-  #   allow(Faraday).to receive(:get) {
-  #     OpenStruct.new({
-  #       body: "{}"
-  #     }) 
-  #   }
-  # end
-
   describe ".where" do
     it "should append conditions" do
       expect{ dummy.where(conditions_1) }.to change{ dummy.conditions }.to(conditions_1)
