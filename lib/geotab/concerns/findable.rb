@@ -29,7 +29,7 @@ module Geotab
         end
 
         def find(parent, id)
-          where(parent, {'id': "'#{id}'"})
+          where(parent, {'id' => "#{id}"}).first
         end
 
         alias_method :where, :all
