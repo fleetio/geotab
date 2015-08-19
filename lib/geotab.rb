@@ -13,6 +13,7 @@ require "geotab/diagnostic"
 require "geotab/failure_mode"
 require "geotab/fault_datum"
 require "geotab/status_datum"
+require "geotab/exceptions"
 require "hash"
 
 module Geotab
