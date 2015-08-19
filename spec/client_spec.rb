@@ -16,7 +16,7 @@ describe Geotab::Client do
 
     it "should set the credentials" do
       expect(client.credentials).
-        to eq "{'database':'database','userName':'username','sessionId':'12097356652278329095'}"
+        to eq "{'database':'database','userName':'username','sessionId':'sessionId'}"
     end
   end
 end
