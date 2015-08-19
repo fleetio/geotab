@@ -58,11 +58,23 @@ Geotab resources are modeled after ActiveRecord models. They have access to `.al
 Geotab::Device.all
 
 # Returns a single device
-Geotab::Device.first
-Geotab::Device.find("b1")
+Geotab::StatusDatum.first
+Geotab::Diagnostic.find("b1")
 
 # Where clauses are chainable. Conditions should follow Geotab SDK syntax
 Geotab::Device.where({"serialNumber" => "G7B020D3E1A4"}).where({"name" => "07 BMW 335i"}).first
+
+# Some resources have associated resources and can be queried as such
+device = Geotab::Device.find("b1")
+
+# Returns associated StatusData objects
+device.status_data
+
+# Returns device's current GPS location
+device.location
+
+=> {:date=>"2015-08-18T19:54:49.063Z", :bearing=>140, :current_state_duration=>"06:04:46.063", :is_device_communicating=>true, :is_driving=>false, :latitude=>33.511528, :longitude=>-86.8136673, :speed=>0.0}
+
 ```
 
 ## Contributing
