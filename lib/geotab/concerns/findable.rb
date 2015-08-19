@@ -39,6 +39,9 @@ module Geotab
 
           # Conditions are now stale, so clear them
           clear_conditions
+
+          # Connection is also stale
+          clear_connection
           
           attributes = JSON.parse(response.body).to_ostruct_recursive.result
 
