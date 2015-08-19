@@ -16,4 +16,39 @@ require "geotab/status_datum"
 require "hash"
 
 module Geotab
+  def self.config
+    yield self
+  end
+
+  def self.username
+    @username
+  end
+
+  def self.username=(value)
+    @username = value
+  end
+
+  def self.password
+    @password
+  end
+
+  def self.password=(value)
+    @password = value
+  end
+
+  def self.database
+    @database
+  end
+
+  def self.database=(value)
+    @database = value
+  end
+
+  def self.path
+    @path
+  end
+
+  def self.path=(value)
+    @path = value
+  end
 end
