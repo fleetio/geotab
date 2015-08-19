@@ -4,7 +4,7 @@ module Geotab
       attr :data, true
       attr :parent, true
 
-      def initialize(data, parent)
+      def initialize(data, parent=nil)
         self.data = data
         self.parent = parent
       end
