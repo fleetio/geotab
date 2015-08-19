@@ -54,7 +54,7 @@ module Geotab
         end
 
         def first
-          all.first
+          all[0]
         end
 
         # Class names should match geotab reference names pretty close,

@@ -1,6 +1,7 @@
 require "faraday"
 require "json"
 require "geotab/version"
+require "geotab/concerns"
 require "geotab/concerns/conditionable"
 require "geotab/concerns/connectable"
 require "geotab/concerns/findable"
