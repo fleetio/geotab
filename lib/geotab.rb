@@ -20,6 +20,12 @@ module Geotab
     yield self
   end
 
+  def self.with_connection(connection)
+    @connection_block = connection
+    yield
+    @connection_block = nil
+  end
+
   def self.has_config?
     @username && @password && @path
   end
@@ -54,5 +60,9 @@ module Geotab
 
   def self.path=(value)
     @path = value
+  end
+
+  def self.connection_block
+    @connection_block
   end
 end

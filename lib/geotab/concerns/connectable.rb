@@ -9,6 +9,8 @@ module Geotab
       def connection
         if @connection
           @connection
+        elsif Geotab.connection_block
+          Geotab.connection_block
         elsif Geotab.has_config?
           OpenStruct.new({
             credentials:
