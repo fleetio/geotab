@@ -20,6 +20,10 @@ module Geotab
     yield self
   end
 
+  def self.has_config?
+    @username && @password && @path
+  end
+
   def self.username
     @username
   end
