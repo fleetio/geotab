@@ -39,6 +39,18 @@ client.authenticate("<username>", "<password>", "<database>")
 Geotab::Device.with_connection(client).all
 ```
 
+Or inside of a block
+
+```ruby
+client = Geotab::Client.new
+client.authenticate("<username>", "<password>", "<database>")
+
+Geotab.with_connection(client) do
+  devices = Geotab::Device.all
+  fault_data = Geotab::FaultDatum.all
+end
+```
+
 Geotab resources are modeled after ActiveRecord models. They have access to `.all`, `.where`, `.find`, and `.first`. The `where` method is chainable. Next step is to add support for `.update`.
 
 ```ruby
