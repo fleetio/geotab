@@ -17,6 +17,8 @@ module Geotab
               "{'database':'#{Geotab.database}','userName':'#{Geotab.username}','password':'#{Geotab.password}'}",
             path: Geotab.path
           })
+        else
+          raise MissingOrInvalidConnectionError, "Please make sure that a connection is active for this request."
         end
       end
 
