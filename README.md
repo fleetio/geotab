@@ -1,7 +1,5 @@
 # Geotab
 
-TODO: Write a gem description
-
 Ruby wrapper for the Geotab SDK API inspired by ActiveRecord.
 
 Add this line to your application's Gemfile:
@@ -41,7 +39,7 @@ client.authenticate("<username>", "<password>", "<database>")
 Geotab::Device.with_connection(client).all
 ```
 
-Geotab resources are modeled after ActiveRecord models. They have access to `.all`, `.where`, `.find`, and `.first`. The `where` mehtod is chainable.
+Geotab resources are modeled after ActiveRecord models. They have access to `.all`, `.where`, `.find`, and `.first`. The `where` method is chainable. Next step is to add support for `.update`.
 
 ```ruby
 # Returns an array of devices
