@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://my.geotab.com/apiv1/Authenticate?database=<database>&password=0419Phil%21&userName=Philj%40zerorezatl.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      user-agent:
+      - Faraday v0.9.1
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - '*/*'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - MyGeotab/0.0.0.0
+      date:
+      - Wed, 19 Aug 2015 15:51:39 GMT
+      content-length:
+      - '267'
+      cache-control:
+      - no-cache
+      content-type:
+      - text/html; charset=utf-8
+      connection:
+      - Close
+    body:
+      encoding: UTF-8
+      string: '{"result":{"credentials":{"database":"<database>","<sessionId>":"10424910203403201229","userName":"<username>"},"path":"my56.geotab.com","securityToken":{"database":"<database>","<sessionId>":"10424910203403201229","userName":"<username>"}}}'
+    http_version: '1.1'
+  recorded_at: Wed, 19 Aug 2015 15:51:39 GMT
+recorded_with: VCR 2.9.3
