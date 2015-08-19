@@ -5,7 +5,7 @@ describe Geotab::Device do
 
   before :each do
     VCR.use_cassette "device/connection", match_requests_on: [:host, :path] do
-      client.authenticate("Philj@zerorezatl.com", "0419Phil!", "zerorez_atlanta")
+      client.authenticate("username", "password", "database")
     end
   end
 
