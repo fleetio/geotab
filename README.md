@@ -21,7 +21,8 @@ Or install it yourself as:
 ## Usage
 Global connection configuration
 
-```Geotab.config do |c|
+```ruby
+Geotab.config do |c|
   c.username = "<username>"
   c.password = "<password>"
   c.database = "<database>"
@@ -33,7 +34,8 @@ Geotab::Device.all
 
 Or inline connection
 
-```client = Geotab::Client.new
+```ruby
+client = Geotab::Client.new
 client.authenticate("<username>", "<password>", "<database>")
 
 Geotab::Device.with_connection(client).all
@@ -41,7 +43,8 @@ Geotab::Device.with_connection(client).all
 
 Geotab resources are modeled after ActiveRecord models. They have access to `.all`, `.where`, `.find`, and `.first`. The `where` mehtod is chainable.
 
-```# Returns an array of devices
+```ruby
+# Returns an array of devices
 Geotab::Device.all
 
 # Returns a single device
