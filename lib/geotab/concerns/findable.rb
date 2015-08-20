@@ -36,12 +36,6 @@ module Geotab
                                     credentials: connection.credentials,
                                     search: formatted_conditions
                                   })
-
-          # Conditions are now stale, so clear them
-          clear_conditions
-
-          # Connection is also stale
-          clear_connection
           
           attributes = JSON.parse(response.body).to_ostruct_recursive.result
 
@@ -52,6 +46,8 @@ module Geotab
               results.push(new(result, connection))
             end
           end
+
+          reset
 
           results
         end
@@ -65,6 +61,15 @@ module Geotab
         # passed to geotab as the typeName param.
         def geotab_reference_name
           self.to_s.split("::").last.gsub("Datum", "Data")
+        end
+
+        # Should run this after each query to avoid stale data
+        def reset
+          # Conditions are now stale, so clear them
+          clear_conditions
+
+          # Connection is also stale
+          clear_connection
         end
       end
 
