@@ -36,7 +36,7 @@ module Geotab
                                     credentials: connection.credentials,
                                     search: formatted_conditions
                                   })
-          
+
           attributes = JSON.parse(response.body).to_ostruct_recursive.result
 
           results = []
