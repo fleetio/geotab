@@ -5,10 +5,14 @@ module Geotab
     def authenticate(username, password, database=nil)
       response = Faraday.get(AUTHENTICATION_URL,
                              {userName: username, password: password, database: database})
-      attributes = JSON.parse(response.body)
+      result = JSON.parse(response.body)
 
-      @path = attributes["result"]["path"]
-      set_credentials(attributes["result"]["credentials"].merge("path" => @path))
+      if result.has_key?("error")
+        raise IncorrectCredentialsError, result["error"]["errors"].first["message"]
+      else
+        @path = result["result"]["path"]
+        set_credentials(result["result"]["credentials"].merge("path" => @path))
+      end
     end
 
     def set_credentials(credentials)
