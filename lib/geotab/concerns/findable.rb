@@ -37,19 +37,28 @@ module Geotab
                                     search: formatted_conditions
                                   })
 
-          attributes = JSON.parse(response.body).to_ostruct_recursive.result
+          body = JSON.parse(response.body).to_ostruct_recursive
 
-          results = []
-
-          if attributes && attributes.any?
-            attributes.each do |result|
-              results.push(new(result, connection))
+          if JSON.parse(response.body).has_key?("error")
+            if body.error.errors.first.message.start_with?("Incorrect MyGeotab login credentials")
+              raise IncorrectCredentialsError, body.error.errors.first.message
+            else
+              raise ApiError, body.error.errors.first.message
             end
+          else
+            attributes = body.result
+            results = []
+
+            if attributes && attributes.any?
+              attributes.each do |result|
+                results.push(new(result, connection))
+              end
+            end
+
+            reset
+
+            results
           end
-
-          reset
-
-          results
         end
 
         def first
