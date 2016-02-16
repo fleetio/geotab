@@ -14,6 +14,13 @@ module Geotab
       })
     end
 
+    def secondary_odometer_readings
+      Geotab::StatusDatum.with_connection(parent).where({
+        'deviceSearch' => {'id' => data.id},
+        'diagnosticSearch' => {'id' => 'DiagnosticEngineHoursAdjustmentId'}
+      })
+    end
+
     def device_status_infos
       Geotab::DeviceStatusInfo.with_connection(parent).where({'deviceSearch' => {'id' => data.id}})
     end
