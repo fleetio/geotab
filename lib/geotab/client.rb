@@ -4,8 +4,13 @@ module Geotab
 
     def authenticate(username, password, database=nil, custom_path)
       @custom_path = custom_path
-      response = RestClient.get(authentication_url,
-        {params: {userName: username, password: password, database: database}})
+
+      response = RestClient::Request.execute({
+        url: authentication_url,
+        method: :get,
+        verify_ssl: false,
+        headers: { params: { userName: username, password: password, database: database }}
+      })
       result = JSON.parse(response.body)
 
       if result.has_key?("error")
