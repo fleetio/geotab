@@ -1,6 +1,6 @@
 # Add support for simple query methods such as where, find, all, and first.
 # Where clauses are chainable and are simply appended to the search param.
-# Ex: 
+# Ex:
 #   Geotab::Device.with_connection(conn).
 #     where({"serialNumber" => "G7B020D3E1A4"}).
 #     where({"name" => "07 BMW 335i"}).
@@ -30,12 +30,15 @@ module Geotab
         # Each query should include this method at the end to perform the
         # actual call to the API.
         def all
-          response = Faraday.get("https://#{connection.path}/apiv1/Get",
-                                 {
-                                    typeName: geotab_reference_name,
-                                    credentials: connection.credentials,
-                                    search: formatted_conditions
-                                  })
+          response = RestClient.get("https://#{connection.path}/apiv1/Get",
+            {
+              params: {
+                typeName: geotab_reference_name,
+                credentials: connection.credentials,
+                search: formatted_conditions
+              }
+            }
+          )
 
           body = JSON.parse(response.body).to_ostruct_recursive
 
