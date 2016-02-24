@@ -4,8 +4,8 @@ module Geotab
 
     def authenticate(username, password, database=nil, custom_path)
       @custom_path = custom_path
-      response = Faraday.get(authentication_url,
-                             {userName: username, password: password, database: database})
+      response = RestClient.get(authentication_url,
+        {params: {userName: username, password: password, database: database}})
       result = JSON.parse(response.body)
 
       if result.has_key?("error")
