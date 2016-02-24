@@ -30,15 +30,12 @@ module Geotab
         # Each query should include this method at the end to perform the
         # actual call to the API.
         def all
-          response = RestClient.get("https://#{connection.path}/apiv1/Get",
-            {
-              params: {
-                typeName: geotab_reference_name,
-                credentials: connection.credentials,
-                search: formatted_conditions
-              }
-            }
-          )
+          response = RestClient::Request.execute({
+            url: "https://#{connection.path}/apiv1/Get",
+            method: :get,
+            verify_ssl: false,
+            headers: { params: { typeName: "Device", credentials: connection.credentials }}
+          })
 
           body = JSON.parse(response.body).to_ostruct_recursive
 
