@@ -34,7 +34,7 @@ module Geotab
             url: "https://#{connection.path}/apiv1/Get",
             method: :get,
             verify_ssl: false,
-            headers: { params: { typeName: "Device", credentials: connection.credentials }}
+            headers: { params: { typeName: "Device", credentials: connection.credentials, search: formatted_conditions }}
           })
 
           body = JSON.parse(response.body).to_ostruct_recursive
