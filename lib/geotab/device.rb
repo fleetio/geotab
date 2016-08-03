@@ -24,7 +24,7 @@ module Geotab
     def pto_hours
       Geotab::StatusDatum.with_connection(parent).where({
         'deviceSearch' => {'id' => data.id},
-        'diagnosticSearch' => {'id' => 'DiagnosticPtoEnabledId'}
+        'diagnosticSearch' => {'id' => 'diagnosticAux1Id'}
       })
     end
 
