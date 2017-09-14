@@ -10,7 +10,7 @@ module Geotab
     def odometer_readings
       Geotab::StatusDatum.with_connection(parent).where({
         'deviceSearch' => {'id' => data.id},
-        'diagnosticSearch' => {'id' => 'DiagnosticOdometerAdjustmentId'}
+        'diagnosticSearch' => {'id' => 'DiagnosticOdometerId'}
       })
     end
 
