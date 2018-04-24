@@ -9,7 +9,7 @@ module Geotab
         url: authentication_url,
         method: :get,
         verify_ssl: false,
-        headers: { params: { userName: username, password: password, database: database }}
+        headers: { params: { userName: username, password: "'#{password}'", database: database }}
       })
       result = JSON.parse(response.body)
 
