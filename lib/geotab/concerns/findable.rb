@@ -1,16 +1,22 @@
 # Add support for simple query methods such as where, find, all, and first.
 # Where clauses are chainable and are simply appended to the search param.
+#
 # Ex:
 #   Geotab::Device.with_connection(conn).
 #     where({"serialNumber" => "G7B020D3E1A4"}).
 #     where({"name" => "07 BMW 335i"}).
 #     all
+#
+# Ex:
+#   Geotab::Defect.find("b2775")
 module Geotab
   module Concerns
     module Findable
       module ClassMethods
         include Geotab::Concerns::Conditionable
         include Geotab::Concerns::Connectable
+
+        GROUP_ENTITIES = %w[ Defect ].freeze
 
         # Format of conditions should match that of geotab's sdk, as the
         # conditions are passed pretty much as is to the API.
@@ -65,11 +71,25 @@ module Geotab
           all[0]
         end
 
-        # Class names should match geotab reference names pretty close,
-        # except where it doesn't make sense (like Data/Datum). This value is
-        # passed to geotab as the typeName param.
+        # This value is passed to geotab as the typeName param. This method
+        # substitutes "Group" for the typeName when the type of object is a
+        # Group object.
+        #
+        # See: https://my.geotab.com/sdk/api/apiReference.html (Look up Group in the Search box)
+        # See: https://helpdesk.geotab.com/hc/en-us/community/posts/115019270503-Trouble-Making-Certain-API-Calls
+        # See: https://helpdesk.geotab.com/hc/en-us/community/posts/115009238926-defects
+        #
+        # It also translates class names that don't exactly match Geotab
+        # reference names when their naming doesn't make sense (Data/Datum).
+        #
+        # Returns a String.
         def geotab_reference_name
-          self.to_s.split("::").last.gsub("Datum", "Data")
+          class_name = self.to_s.split("::").last
+          if GROUP_ENTITIES.include?(class_name)
+            "Group"
+          else
+            class_name.gsub("Datum", "Data")
+          end
         end
 
         # Should run this after each query to avoid stale data
