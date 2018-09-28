@@ -39,16 +39,20 @@ module Geotab
     def location
       result = device_status_infos.first
 
-      {
-        date: result.data.dateTime,
-        bearing: result.data.bearing,
-        current_state_duration: result.data.currentStateDuration,
-        is_device_communicating: result.data.isDeviceCommunicating,
-        is_driving: result.data.isDriving,
-        latitude: result.data.latitude,
-        longitude: result.data.longitude,
-        speed: result.data.speed
-      }
+      if result.present?
+        {
+          date: result.data.dateTime,
+          bearing: result.data.bearing,
+          current_state_duration: result.data.currentStateDuration,
+          is_device_communicating: result.data.isDeviceCommunicating,
+          is_driving: result.data.isDriving,
+          latitude: result.data.latitude,
+          longitude: result.data.longitude,
+          speed: result.data.speed
+        }
+      else
+        {}
+      end
     end
   end
 end
