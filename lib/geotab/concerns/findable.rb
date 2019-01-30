@@ -61,10 +61,10 @@ module Geotab
               end
             end
 
-            reset
-
             results
           end
+        ensure
+          reset
         end
 
         def first
