@@ -25,7 +25,6 @@ module Geotab
   end
 
   def self.with_connection(connection)
-    # @connection_block = connection
     Thread.current[:geotab_connection_block] = connection
     yield
   ensure
