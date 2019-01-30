@@ -1,38 +1,44 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://my56.geotab.com/apiv1/Get?credentials=%7B%27database%27%3A%27<database>%27%2C%27userName%27%3A%27Philj%40zerorezatl.com%27%2C%27<sessionId>%27%3A%2710424910203403201229%27%7D&search=%7B%27id%27%3A%27b1%27%7D&typeName=Device
+    method: post
+    uri: https://my30.geotab.com/apiv1/
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"method":"Get","params":{"typeName":"Device","credentials":{"database":"<database>","userName":"<username>","<sessionId>":"<sessionId>"},"search":{"id":"b1"}}}'
     headers:
-      user-agent:
-      - Faraday v0.9.1
-      accept-encoding:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      accept:
-      - '*/*'
+      User-Agent:
+      - Ruby
+      Host:
+      - my30.geotab.com
   response:
     status:
       code: 200
       message: OK
     headers:
-      server:
-      - MyGeotab/0.0.0.0
-      date:
-      - Wed, 19 Aug 2015 15:51:42 GMT
-      content-length:
-      - '2041'
-      cache-control:
-      - no-cache
-      content-type:
-      - text/html; charset=utf-8
-      connection:
-      - Close
+      Date:
+      - Wed, 30 Jan 2019 23:09:38 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Server:
+      - Kestrel
+      Cache-Control:
+      - must-revalidate, no-cache, max-age=0
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
     body:
-      encoding: UTF-8
-      string: '{"result":[{"auxWarningSpeed":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"enableAuxWarning":[false,false,false,false,false,false,false,false],"enableControlExternalRelay":false,"externalDeviceShutDownDelay":0,"immobilizeArming":0,"immobilizeUnit":true,"isAuxIgnTrigger":[false,false,false,false],"isAuxInverted":[false,false,false,false,false,false,false,false],"accelerationWarningThreshold":20,"accelerometerThresholdWarningFactor":0,"brakingWarningThreshold":-30,"corneringWarningThreshold":22,"enableBeepOnDangerousDriving":true,"enableBeepOnRpm":true,"engineHourOffset":0,"isActiveTrackingEnabled":false,"isDriverSeatbeltWarningOn":true,"isPassengerSeatbeltWarningOn":true,"isReverseDetectOn":true,"odometerFactor":1.0,"odometerOffset":0,"rpmValue":6000,"seatbeltWarningSpeed":10.0,"activeFrom":"2015-04-29T18:22:46.762Z","activeTo":"2050-01-01","autoGroups":[],"customParameters":[],"disableBuzzer":false,"enableBeepOnIdle":false,"enableMustReprogram":false,"enableSpeedWarning":true,"engineType":"EngineTypeGenericId","engineVehicleIdentificationNumber":"1GCWGFBA0E1195078","ensureHotStart":false,"gpsOffDelay":0,"idleMinutes":3,"isSpeedIndicator":true,"licensePlate":"","licenseState":"","major":4,"minAccidentSpeed":3.0,"minor":27,"parameterVersion":2,"pinDevice":true,"speedingOff":111.0,"speedingOn":113.0,"vehicleIdentificationNumber":"1GCWGFBA0E1195078","groups":[{"children":[],"id":"GroupCompanyId"}],"timeZoneId":"America/New_York","comment":"","deviceFlags":{"isActiveTrackingAllowed":true,"isEngineAllowed":true,"isGarminAllowed":true,"isGarminInUse":false,"isHOSAllowed":true,"isHOSInUse":false,"isIridiumAllowed":true,"isIridiumInUse":false,"isOdometerAllowed":true,"isTripDetailAllowed":true,"isUIAllowed":true,"isVINAllowed":true,"ratePlans":["Live"]},"deviceType":"GO7","hardwareId":550729377,"ignoreDownloadsUntil":"1986-01-01","maxSecondsBetweenLogs":200.0,"name":"VEHICLE\t35","productId":107,"serialNumber":"G72020D376A1","timeToDownload":"1.00:00:00","workTime":"WorkTimeStandardHoursId","id":"b1","devicePlans":["Pro"]}]}'
-    http_version: '1.1'
-  recorded_at: Wed, 19 Aug 2015 15:51:42 GMT
-recorded_with: VCR 2.9.3
+      encoding: ASCII-8BIT
+      string: '{"result":[{"auxWarningSpeed":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}],"jsonrpc":"2.0"}'
+    http_version:
+  recorded_at: Wed, 30 Jan 2019 23:09:39 GMT
+recorded_with: VCR 4.0.0

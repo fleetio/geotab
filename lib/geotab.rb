@@ -1,6 +1,5 @@
-require "faraday"
 require "json"
-require "rest_client"
+require "net/http"
 require "geotab/version"
 require "geotab/concerns"
 require "geotab/concerns/conditionable"
@@ -18,7 +17,6 @@ require "geotab/fault_datum"
 require "geotab/log_record"
 require "geotab/status_datum"
 require "geotab/exceptions"
-require "hash"
 
 module Geotab
   def self.config

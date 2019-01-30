@@ -1,38 +1,50 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://my.geotab.com/apiv1/Authenticate?database=<database>&password=<password>&userName=<username>
+    method: post
+    uri: https://my.geotab.com/apiv1/
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"method":"Authenticate","params":{"userName":"<username>","password":"<password>","database":"<database>"}}'
     headers:
-      user-agent:
-      - Faraday v0.9.1
-      accept-encoding:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      accept:
-      - '*/*'
+      User-Agent:
+      - Ruby
+      Host:
+      - my.geotab.com
   response:
     status:
       code: 200
       message: OK
     headers:
-      server:
-      - MyGeotab/0.0.0.0
-      date:
-      - Tue, 18 Aug 2015 23:18:26 GMT
-      content-length:
-      - '267'
-      cache-control:
-      - no-cache
-      content-type:
-      - text/html; charset=utf-8
-      connection:
-      - Close
+      Date:
+      - Wed, 30 Jan 2019 22:20:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Server:
+      - Kestrel
+      Cache-Control:
+      - must-revalidate, no-cache, max-age=0
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      Via:
+      - 1.1 google
+      Set-Cookie:
+      - GCLB=CN-m-ezIxdXZAw; path=/; HttpOnly; expires=Wed, 30-Jan-2019 22:30:31 GMT
+      Alt-Svc:
+      - clear
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"result":{"credentials":{"database":"<database>","sessionId":"<sessionId>","userName":"<username>"},"path":"my56.geotab.com","securityToken":{"database":"<database>","sessionId":"12097356652278329095","userName":"<username>"}}}'
-    http_version: '1.1'
-  recorded_at: Tue, 18 Aug 2015 23:18:26 GMT
-recorded_with: VCR 2.9.3
+      encoding: ASCII-8BIT
+      string: '{"result":{"credentials":{"database":"<database>","sessionId":"<sessionId>","userName":"<username>"},"path":"my30.geotab.com","securityToken":{"database":"<database>","sessionId":"<sessionId>","userName":"<username>"}},"jsonrpc":"2.0"}'
+    http_version:
+  recorded_at: Wed, 30 Jan 2019 22:20:31 GMT
+recorded_with: VCR 4.0.0
