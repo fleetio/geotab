@@ -7,8 +7,8 @@ module Geotab
       # Returns either the connection object with with the .with_connection
       # method, or the connection configuration.
       def connection
-        if @connection
-          @connection
+        if Thread.current[:geotab_connection]
+          Thread.current[:geotab_connection]
         elsif Geotab.connection_block
           Geotab.connection_block
         elsif Geotab.has_config?
@@ -25,7 +25,7 @@ module Geotab
       # Meant to be added to a query to specify the connection to use to query
       # the API. Ex: Geotab::Device.with_connection(con).first
       def with_connection(connection)
-        @connection = connection
+        Thread.current[:geotab_connection] = connection
 
         self
       end
@@ -33,7 +33,7 @@ module Geotab
       # Reset connection. This should be done after each .all call to avoid
       # stale connection.
       def clear_connection
-        @connection = nil
+        Thread.current[:geotab_connection] = nil
       end
     end
   end

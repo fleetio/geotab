@@ -25,48 +25,50 @@ module Geotab
   end
 
   def self.with_connection(connection)
-    @connection_block = connection
+    # @connection_block = connection
+    Thread.current[:geotab_connection_block] = connection
     yield
-    @connection_block = nil
+  ensure
+    Thread.current[:geotab_connection_block] = nil
   end
 
   def self.has_config?
-    @username && @password && @path
+    username && password && path
   end
 
   def self.username
-    @username
+    Thread.current[:geotab_username]
   end
 
   def self.username=(value)
-    @username = value
+    Thread.current[:geotab_username] = value
   end
 
   def self.password
-    @password
+    Thread.current[:geotab_password]
   end
 
   def self.password=(value)
-    @password = value
+    Thread.current[:geotab_password] = value
   end
 
   def self.database
-    @database
+    Thread.current[:geotab_database]
   end
 
   def self.database=(value)
-    @database = value
+    Thread.current[:geotab_database] = value
   end
 
   def self.path
-    @path
+    Thread.current[:geotab_path]
   end
 
   def self.path=(value)
-    @path = value
+    Thread.current[:geotab_path] = value
   end
 
   def self.connection_block
-    @connection_block
+    Thread.current[:geotab_connection_block]
   end
 end
