@@ -39,7 +39,7 @@ module Geotab
     def location
       result = device_status_infos.first
 
-      if result.present?
+      if result
         {
           date: result.data.dateTime,
           bearing: result.data.bearing,

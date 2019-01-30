@@ -5,7 +5,7 @@ describe Geotab::Concerns::Conditionable do
   let(:conditions) { {"c1" => "v1", "c2" => {"c3" => "v3"}} }
 
   before :each do
-    dummy.instance_variable_set(:@conditions, conditions)
+    dummy.conditions.merge!(conditions)
   end
 
   describe ".conditions" do

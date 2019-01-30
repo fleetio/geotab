@@ -1,11 +1,12 @@
 spec = Gem::Specification.find_by_name("geotab")
 
 require "#{spec.gem_dir}/lib/geotab.rb"
+require 'webmock/rspec'
 require "vcr"
 
 VCR.configure do |c|
   c.cassette_library_dir = "#{spec.gem_dir}/spec/vcr"
-  c.hook_into :fakeweb
+  c.hook_into :webmock
 
   c.filter_sensitive_data('<username>') { "username" }
   c.filter_sensitive_data('<password>') { "password" }

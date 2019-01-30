@@ -6,7 +6,7 @@ describe Geotab::Client do
   describe ".authenticate" do
     before :each do
       VCR.use_cassette "client/authenticate", match_requests_on: [:host, :path] do
-        client.authenticate("fake", "fake", "fake")
+        client.authenticate("username", "password", "database", nil)
       end
     end
 
