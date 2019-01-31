@@ -36,14 +36,18 @@ module Geotab
         # Each query should include this method at the end to perform the
         # actual call to the API.
         def all
-          response = RestClient::Request.execute({
-            url: "https://#{connection.path}/apiv1/Get",
-            method: :get,
-            verify_ssl: false,
-            headers: { params: { typeName: geotab_reference_name, credentials: connection.credentials, search: formatted_conditions }, content_type: :json, accept: :json }
-          })
+          params = {
+            method: "Get",
+            params: { typeName: geotab_reference_name,
+                      credentials: connection.credentials,
+                      search: conditions }
+          }
 
-          body = JSON.parse(response.body).to_ostruct_recursive
+          response = Net::HTTP.post(URI("https://#{connection.path}/apiv1/"),
+                                    params.to_json,
+                                    "Content-Type" => "application/json", "Accept" => "application/json")
+
+          body = convert_to_ostruct_recursive(JSON.parse(response.body))
 
           if JSON.parse(response.body).has_key?("error")
             if body.error.errors.first.message.start_with?("Incorrect MyGeotab login credentials")
@@ -99,6 +103,24 @@ module Geotab
 
           # Connection is also stale
           clear_connection
+        end
+
+        def convert_to_ostruct_recursive(obj)
+          result = obj
+          if result.is_a? Hash
+            result = with_sym_keys(result.dup)
+            result.each  do |key, val|
+              result[key] = convert_to_ostruct_recursive(val)
+            end
+            result = OpenStruct.new result
+          elsif result.is_a? Array
+             result = result.map { |r| convert_to_ostruct_recursive(r) }
+          end
+          return result
+        end
+
+        def with_sym_keys(hash)
+          hash.inject({}) { |memo, (k,v)| memo[k.to_sym] = v; memo }
         end
       end
 

@@ -5,9 +5,11 @@ describe Geotab::Concerns::Findable do
   let(:conditions_1) { {"c1" => "v1"} }
   let(:conditions_2) { {"c2" => "v3"} }
 
+  before { dummy.clear_conditions }
+
   describe ".where" do
     it "should append conditions" do
-      expect{ dummy.where(conditions_1) }.to change{ dummy.conditions }.to(conditions_1)
+      expect{ dummy.where(conditions_1) }.to change(dummy, :conditions).to(conditions_1)
     end
 
     it "should be chainable" do

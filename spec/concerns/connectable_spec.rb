@@ -5,7 +5,7 @@ describe Geotab::Concerns::Connectable do
   let(:connection) { "connection placeholder" }
 
   before :each do
-    dummy.instance_variable_set(:@connection, connection)
+    Thread.current[:geotab_connection] = connection
   end
 
   describe ".connection" do
