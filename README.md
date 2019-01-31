@@ -5,7 +5,7 @@ Ruby wrapper for the Geotab SDK API inspired by ActiveRecord.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'geotab'
+gem "geotab", git: "https://github.com/rarestep/geotab.git", tag: "v0.0.1"
 ```
 
 And then execute:
