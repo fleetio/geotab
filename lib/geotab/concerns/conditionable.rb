@@ -12,12 +12,6 @@ module Geotab
       def clear_conditions
         Thread.current[:geotab_conditions] = {}
       end
-
-      # Format the conditions hash according to Geotab spec. A normal hash
-      # looks like: {'id':'XXXX'}
-      def formatted_conditions
-        conditions.to_s.gsub(/\s*=>\s*/, ":").gsub("\"", "'")
-      end
     end
   end
 end
