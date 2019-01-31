@@ -14,7 +14,7 @@ module Geotab
         elsif Geotab.has_config?
           OpenStruct.new({
             credentials:
-              "{'database':'#{Geotab.database}','userName':'#{Geotab.username}','password':'#{Geotab.password}'}",
+              { database: Geotab.database, userName: Geotab.username, password: Geotab.password },
             path: Geotab.path
           })
         else
