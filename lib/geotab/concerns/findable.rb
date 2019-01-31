@@ -43,36 +43,64 @@ module Geotab
                       search: conditions }
           }
 
-          response = Net::HTTP.post(URI("https://#{connection.path}/apiv1/"),
-                                    params.to_json,
-                                    "Content-Type" => "application/json", "Accept" => "application/json")
+          response = make_request("https://#{connection.path}/apiv1/", params)
 
-          body = convert_to_ostruct_recursive(JSON.parse(response.body))
+          attributes = response.result
+          result = []
 
-          if JSON.parse(response.body).has_key?("error")
+          push_results(result, attributes)
+
+          result
+        ensure
+          reset
+        end
+
+        def get_feed(from_version)
+          params = {
+            method: "GetFeed",
+            params: { typeName: geotab_reference_name,
+                      credentials: connection.credentials,
+                      search: conditions,
+                      fromVersion: from_version }
+          }
+
+          response = make_request("https://#{connection.path}/apiv1/", params)
+          result = { results: [] }
+
+          attributes = response.result.data
+          result[:to_version] = response.result.toVersion
+          push_results(result[:results], attributes)
+
+          result
+        ensure
+          reset
+        end
+
+        def make_request(path, params)
+          res = Net::HTTP.post(URI(path), params.to_json, "Content-Type" => "application/json", "Accept" => "application/json")
+          body = convert_to_ostruct_recursive(JSON.parse(res.body))
+
+          if body.error
             if body.error.errors.first.message.start_with?("Incorrect MyGeotab login credentials")
               raise IncorrectCredentialsError, body.error.errors.first.message
             else
               raise ApiError, body.error.errors.first.message
             end
-          else
-            attributes = body.result
-            results = []
-
-            if attributes && attributes.any?
-              attributes.each do |result|
-                results.push(new(result, connection))
-              end
-            end
-
-            results
           end
-        ensure
-          reset
+
+          body
         end
 
         def first
           all[0]
+        end
+
+        def push_results(results, attributes)
+          if attributes && attributes.any?
+            attributes.each do |result|
+              results.push(new(result, connection))
+            end
+          end
         end
 
         # This value is passed to geotab as the typeName param. This method
